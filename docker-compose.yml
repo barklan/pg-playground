@@ -1,0 +1,53 @@
+---
+version: "3.9"
+services:
+  pg:
+    image: "postgres:15"
+    volumes:
+      - playground-pg-data:/var/lib/postgresql/data/pgdata
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      # THIS IS UNSAFE!
+      # - POSTGRES_HOST_AUTH_METHOD=trust
+    env_file:
+      - ./.env
+    ports:
+      - 5432:5432
+    networks:
+      - traefik-public
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    env_file:
+      - ./.env
+    volumes:
+      - playground-mysql-data:/var/lib/mysql
+    networks:
+      - traefik-public
+    healthcheck:
+      test: "mysql $$MYSQL_DATABASE --user=$$MYSQL_USER --password=$$MYSQL_PASSWORD -e 'SELECT 1;'"
+      interval: 3s
+      timeout: 10s
+      retries: 20
+
+  # pgweb:
+  #   container_name: pgweb
+  #   image: sosedoff/pgweb
+  #   ports:
+  #     - "8081:8081"
+  #   links:
+  #     - db:db
+  #   environment:
+  #     - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres?sslmode=disable
+  #   depends_on:
+  #     - db
+
+volumes:
+  playground-pg-data:
+  playground-mysql-data:
+
+networks:
+  traefik-public:
+    external: false
