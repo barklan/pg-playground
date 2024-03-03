@@ -1,6 +1,9 @@
 set shell := ["bash", "-uc"]
 set dotenv-load
 
+go-run:
+    go run main.go
+
 up:
     docker compose up --build
 
