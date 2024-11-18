@@ -5,7 +5,7 @@ go-run:
     go run main.go
 
 up:
-    docker compose up --build
+    docker compose up --build --force-recreate
 
 pgcli:
     pgcli postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB

@@ -2,7 +2,7 @@
 version: "3.9"
 services:
   pg:
-    image: "postgres:16.2"
+    image: "postgres:16.4"
     volumes:
       - playground-pg-data:/var/lib/postgresql/data/pgdata
     environment:
@@ -50,4 +50,4 @@ volumes:
 
 networks:
   traefik-public:
-    external: false
+    external: true
