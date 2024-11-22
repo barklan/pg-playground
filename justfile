@@ -1,5 +1,4 @@
-set shell := ["bash", "-uc"]
-set dotenv-load
+import '~/justfile'
 
 go-run:
     go run main.go
